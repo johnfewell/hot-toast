@@ -34,7 +34,16 @@
         <ng-container *dynamicView="toast.message; context: context; injector: toastComponentInjector"></ng-container>
       </div>
     </div>
-
+    <button
+      *ngIf="toast.action"
+      (click)="executeAction()"
+      type="button"
+      class="hot-toast-action-btn"
+      [attr.aria-label]="toast.action.ariaLabel ?? toast.action.label"
+      [ngStyle]="toast.actionStyle"
+    >
+      {{ toast.action.label }}
+    </button>
     <button
       *ngIf="toast.dismissible"
       (click)="close()"

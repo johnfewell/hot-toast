@@ -15,6 +15,7 @@ export class ToastConfig implements DefaultToastOptions {
   position: ToastPosition = 'top-center';
   className: string;
   closeStyle: any;
+  actionStyle: any;
   dismissible: boolean;
   autoClose = true;
   duration: number;
@@ -39,6 +40,12 @@ export type ToastPosition = 'top-left' | 'top-center' | 'top-right' | 'bottom-le
 export type IconTheme = {
   primary: string;
   secondary?: string;
+};
+
+export type Action = {
+  label: string;
+  callback: () => void;
+  ariaLabel?: string;
 };
 
 export type ToastTheme = 'toast' | 'snackbar';
@@ -138,6 +145,9 @@ export interface Toast<DataType> {
   /**Extra styles to apply for close button */
   closeStyle?: any;
 
+  /**Extra styles to apply for action button */
+  actionStyle?: any;
+
   createdAt: number;
   visible: boolean;
   height?: number;
@@ -174,6 +184,14 @@ export interface Toast<DataType> {
    * @memberof Toast
    */
   data?: DataType;
+
+  /**
+   * Allows you to pass a callback function to the toast
+   *
+   * @type {DataType}
+   * @memberof Toast
+   */
+  action?: Action;
 }
 
 export type ToastOptions<DataType> = Partial<
@@ -196,6 +214,8 @@ export type ToastOptions<DataType> = Partial<
     | 'injector'
     | 'data'
     | 'attributes'
+    | 'action'
+    | 'actionStyle'
   >
 >;
 
@@ -230,7 +250,16 @@ export interface HotToastServiceMethods {
 export type UpdateToastOptions<DataType> = Partial<
   Pick<
     Toast<DataType>,
-    'icon' | 'duration' | 'dismissible' | 'className' | 'style' | 'iconTheme' | 'type' | 'theme' | 'closeStyle'
+    | 'icon'
+    | 'duration'
+    | 'dismissible'
+    | 'className'
+    | 'style'
+    | 'iconTheme'
+    | 'type'
+    | 'theme'
+    | 'closeStyle'
+    | 'actionStyle'
   >
 >;
 

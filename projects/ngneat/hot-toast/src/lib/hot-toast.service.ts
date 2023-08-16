@@ -302,6 +302,7 @@ export class HotToastService implements HotToastServiceMethods {
         type,
         visible: true,
         observableMessages: observableMessages ?? undefined,
+        action: options?.action,
         ...options,
       };
 

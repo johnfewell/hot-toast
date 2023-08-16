@@ -164,6 +164,11 @@ export class HotToastComponent implements OnInit, AfterViewInit, OnDestroy, OnCh
     animate(nativeElement, exitAnimation);
   }
 
+  executeAction() {
+    this.toast.action.callback();
+    this.close();
+  }
+
   ngOnDestroy() {
     this.close();
     while (this.unlisteners.length) {

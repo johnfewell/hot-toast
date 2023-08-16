@@ -142,3 +142,21 @@
     transform: translate3d(0, -130px, -1px) scale(0.5);
   }
 }
+
+.hot-toast-action-btn {
+  background-color: var(--hot-toast-action-btn-bg, transparent);
+  border: var(--hot-toast-action-btn-border, none);
+  border-radius: var(--hot-toast-action-btn-border-radius, 4px);
+  color: var(--hot-toast-action-btn-color, #007bff);
+  cursor: var(--hot-toast-action-btn-cursor, pointer);
+  margin-left: var(--hot-toast-action-btn-margin-left, 5px);
+  padding: var(--hot-toast-action-btn-padding, 5px 10px);
+
+  &:hover {
+    background-color: var(--hot-toast-action-btn-hover-bg, #f8f9fa);
+  }
+
+  &:active {
+    background-color: var(--hot-toast-action-btn-active-bg, #e2e6ea);
+  }
+}

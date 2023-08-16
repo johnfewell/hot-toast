@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import { Component, Inject, Injector, OnInit, Optional, ViewChild } from '@angular/core';
 import { HotToastClose, HotToastRef, HotToastService } from '@ngneat/hot-toast';
-import { from, of } from 'rxjs';
+import { Subject, from, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 interface Example {
@@ -26,6 +26,7 @@ export class ExampleComponent implements OnInit {
   @ViewChild('templateContext') ngTemplateContext;
 
   examples: Example[] = [];
+  action$ = new Subject<void>();
 
   closedEventData: HotToastClose = undefined;
 
@@ -599,8 +600,64 @@ export class ExampleComponent implements OnInit {
           });
         },
       },
+      {
+        id: 'callback',
+        title: 'Callback',
+        subtitle:
+          'You can open a toast with a button to execute a callback function such as to undo an action or retry a request. Accepts an optional <b><code>ariaLabel</b></code> for accessibility. The <b><code>ariaLabel</code></b> will default to the <b><code>label</b></code> if none is provided. </br> Use <b><code>autoClose</b></code> to render the exit animation. Use <b><code>actionStyle</b></code> to style the button.',
+        emoji: '↩',
+        activeSnippet: 'typescript',
+        snippet: {
+          typescript: `
+  action$ = new Subject<void>();
+
+  ngOnInit(): void {
+    this.action$.subscribe(() => {
+      console.log('callback clicked');
+    });
+  }
+  ...
+  this.toast.error('Something went wrong', {
+    autoClose: false,
+    action: {
+      label: 'Retry',
+      ariaLabel: 'Retry the request',
+      callback: () => {
+        this.action$.next();
+      },
+    },
+    actionStyle: {
+      border: '1px solid #713200',
+      fontFamily: 'serif',
+      color: '#713200',
+    },
+  });
+  `,
+        },
+        action: () => {
+          this.toast.error('Something went wrong', {
+            autoClose: false,
+            action: {
+              label: 'Retry',
+              ariaLabel: 'Retry the request',
+              callback: () => {
+                this.action$.next();
+              },
+            },
+            actionStyle: {
+              border: '1px solid #713200',
+              fontFamily: 'serif',
+              color: '#713200',
+            },
+          });
+        },
+      },
     ];
     Array.prototype.push.apply(this.examples, examples);
+
+    this.action$.subscribe(() => {
+      console.log('callback clicked');
+    });
   }
 
   click(e: Example) {
